@@ -36,6 +36,10 @@
     {
         scale:0;
     }
+    h1,h2, h3, h4,p
+    {
+        text-align: center;
+    }
     
 </style>
 <body>
@@ -45,22 +49,22 @@
 
         
         <div class="shuffleContent absolute flex flex-col w-full items-center">
-            <div class="grant-access-page flex flex-col items-center absolute">
+            <div class="grant-access-page flex flex-col items-center absolute pt-12 gap-3 h-[60vh]">
                 <img src="./assets/location.png" alt="" class="w-[90px] mx-auto h-[90px] m-6">
                 <h2 class="font-bold text-lg">Grant Location Access</h2>
                 <p>Allow Access to get weather information</p>
-                <button class="grantAccessButtn mt-4 bg-[#aca8a896] py-2 px-5 rounded text-sm font-bold w-[40%]" onclick="getLocation()">Grant Access</button>
+                <button class="grantAccessButtn mt-4 bg-[#aca8a896] py-2 px-5 rounded text-sm font-bold " onclick="getLocation()">Grant Access</button>
             
             </div>
-            <div class="accessed size0 w-full">
-                <div class="topdiv flex justify-between pt-7 font-bolder text-sm tracking-wider font-bold py-2 justify-evenly ">
+            <div class="accessed size0 mx-auto w-[70%] flex flex-col items-center relative">
+                <div class="topdiv flex pt-7 font-bolder text-sm tracking-wider font-bold py-2 justify-evenly w-full">
                     <!-- selected bg-[#aca8a896] -->
                     <button id="tab" class="s1" onclick="switchTab(this)" DefaultWeather>Your Weather</button>
                     <button id="tab" onclick="switchTab(this)" SearchWeather>Search Weather</button>
                 </div>
                 
-                <div class="searchBar mx-auto flex flex-row justify-center gap-2 w-full size0">
-                    <div class="inputContainer bg-[#aca8a896] w-[90%] rounded-md h-8">
+                <div class="searchBar mx-auto flex flex-row gap-2 w-[50%] size0 justify-center pt-5">
+                    <div class="inputContainer bg-[#aca8a896] w-[60%] rounded-md h-8">
                         <input inputText type="text" placeholder="Search for city..." class="bg-transparent p-3 opacity-80  rounded-md w-full h-full border border-[#aca8a896] focus:outline-none focus:border-white focus:ring-1">
                     </div>
     
@@ -69,34 +73,40 @@
                     </button>
     
                 </div>
-               <div id="Container">
+               <div id="Container" class="w-1/2 mx-auto flex flex-col items-center">
                    <div class="">
-                       <div>
-                          <h4 City></h4>
-                          <img src="" alt="" country-icon>
+                       <div class="flex items-baseline justify-evenly w-32">
+                          <h4 City class="font-semibold text-2xl pb-2"></h4>
+                          <img class="h-5" src="" alt="" country-icon>
                        </div>
-                       <p Desc></p>
-                       <img src="" alt="" weather-image>
-                       <h3 Temp></h3>
+                       <div class="flex flex-col items-center pt-9 justify-evenly">
+                          <p Desc></p>
+                          <img src="" alt="" class="w-9" weather-image>
+                          <h3 Temp class="font-extrabold text-3xl pt-4 shadow-cyan-300 drop-shadow-md"></h3>
+                       </div>
                    </div>
-                   <div class="ExtraInfo">
-                    <div class="block">
-                        <img src="./assets/wind.png" alt="">   
+                   <div class="ExtraInfo flex w-full justify-center gap-2 pt-7 text-sm">
+                    <div class="box box-border p-4 bg-[#7c7b7bb4] h-32 w-32  flex flex-col items-center justify-around rounded">
+                        <img src="./assets/wind.png" alt="" class="h-16 w-16">   
                         <p>WINDSPEED</p>
-                        <p wind-speed></p>
+                        <p class="font-semibold" wind-speed></p>
                     </div>
-                    <div class="block">
-                        <img src="./assets/humidity.png" alt="">   
+                    <div class="box box-border p-4 bg-[#7c7b7bb4] h-32 w-32 flex flex-col items-center justify-around rounded">
+                        <img src="./assets/humidity.png" alt="" class="h-16 w-16 ">   
                         <p >Humidity</p>
-                        <p humidity></p>
+                        <p class="font-semibold" humidity></p>
                     </div>
-                    <div class="block">
-                        <img src="./assets/cloud.png" alt="">  
+                    <div class="box box-border p-4 bg-[#7c7b7bb4] h-32 w-32 flex flex-col items-center justify-around rounded">
+                        <img src="./assets/cloud.png" alt="" class="h-16 w-16">  
                         <p>Clouds</p>
-                        <p clouds></p>
+                        <p class="font-semibold" clouds></p>
                     </div>
                    </div>
                    <p></p>
+               </div>
+               <div class="erronous h-[50vh] flex flex-col align-center justify-center gap-16 size0 absolute top-40">
+                <img src="./assets/not-found.png" alt=""  class="h-32">
+                <h2>Try Again</h2>
                </div>
                 
                 
@@ -106,7 +116,7 @@
                 
             </div> -->
         </div>
-        <div class="loader size0">
+        <div class="loader size0 ">
             <img src="./assets/loading.gif" width="150" height="150">
         </div>
     </div>

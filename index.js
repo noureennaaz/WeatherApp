@@ -1,4 +1,3 @@
-
 const API_KEY="473f54186294f1278a516ff968aaa1f3";
 const inputElement=document.querySelector('[InputText]');
 const grantAccess=document.querySelector('.grant-access-page')
@@ -10,6 +9,9 @@ const searchWeather=document.querySelector("[SearchWeather]")
 const ContainerTab=document.querySelector('#Container');
 //Geolocation Api
 const searchbar=document.querySelector('.searchBar');
+let errPage=document.querySelector('.erronous');
+const submit=document.querySelector("[submiti]");
+const input=document.querySelector("[input]");
 
 let CurrentTab=yourWeather;
 FromSessionStorage();
@@ -24,7 +26,6 @@ function switchTab(NewTab)
         {
             yourWeather.classList.add("s1");
             searchWeather.classList.remove("s1");
-
             searchbar.classList.add('size0');
             ContainerTab.classList.remove('size0')
             console.log("added class");
@@ -82,6 +83,7 @@ async function fetchDataFromCoordinates(coordinates)
     }
     catch{
         console.log("Coordinate fetch fails");
+        
     }
 }
 
@@ -90,11 +92,18 @@ function getLocation()
 {
 
     try{
+
+        contents.classList.add("size0");
+        loadContent.classList.remove("size0");
         
         if(navigator.geolocation)
         {
              navigator.geolocation.getCurrentPosition(fetchWeatherCoordinates);
+             grantAccess.classList.add('size0');
         }
+        contents.classList.remove("size0");
+        loadContent.classList.add("size0");
+
     }
     catch{
        console.log('geolocationfailed');
@@ -103,18 +112,22 @@ function getLocation()
 }
 function fetchWeatherCoordinates(location)
 {
-    const locationObject={
-        lat:location.coords.latitude,
-        lon:location.coords.longitude
+    try{
+        const locationObject={
+            lat:location.coords.latitude,
+            lon:location.coords.longitude
+        }
+        console.log('this is to inform coordinates are being stored on the session');
+        sessionStorage.setItem("user-coordinates", JSON.stringify(locationObject));
+        console.log("successfull");
+        console.log(sessionStorage.getItem("user-coordinates"));
+    
+    
+        fetchDataFromCoordinates(locationObject);
     }
-    console.log('this is to inform coordinates are being stored on the session');
-    sessionStorage.setItem("user-coordinates", JSON.stringify(locationObject));
-    console.log("successfull");
-    console.log(sessionStorage.getItem("user-coordinates"));
+    catch{
 
-
-    fetchDataFromCoordinates(locationObject);
-
+    }
 
 }
 
@@ -125,6 +138,10 @@ function fetchWeatherCoordinates(location)
 // https://openweathermap.org/img/wn/${value to be inserted}@2x.png
 function renderInfo(CurrentData)
 {
+    if(!errPage.classList.contains("size0"))
+    {
+        errPage.classList.add("size0");
+    }
 
     const city=document.querySelector("[City]");
     const countryIcon=document.querySelector("[country-icon]");
@@ -141,8 +158,8 @@ function renderInfo(CurrentData)
     description.innerText=CurrentData?.weather?.[0]?.description;
     weatherIcon.src=`http://openweathermap.org/img/w/${CurrentData?.weather?.[0]?.icon}.png`;
     
-    temperature.innerText=`${CurrentData?.main?.temp} m/s`;
-    winds.innerText=CurrentData?.wind?.speed;
+    temperature.innerText=`${CurrentData?.main?.temp} °C `;
+    winds.innerText=`${CurrentData?.wind?.speed} m/s`;
     Humidity.innerText=`${CurrentData?.main?.humidity} %`;
     Clouds.innerText=`${CurrentData?.clouds?.all} %`;
     ContainerTab.classList.remove('size0');
@@ -164,14 +181,22 @@ async function fetchWeatherData(city)
         const respose=await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`);
 
         const data= await respose.json();
-        console.log("Weather data Is ->"+ data?.main?.temp.toFixed(2));
-
+        
+        if(data?.cod==404)
+        {
+            throw err;
+        }
         renderInfo(data);
 
     }
     catch(err)
     {
-        console.log("Error found ", err);
+        
+          console.log("fetch fail");
+          if(!ContainerTab.classList.contains('size0'))
+               ContainerTab.classList.add('size0');
+              
+          errPage.classList.remove("size0");
 
     }
 
@@ -195,5 +220,11 @@ function searchCity()
 
 }
 
-//Event listener on search 
+// //Event listener on search 
+// input.addEventListener("keypress", function(event){
+//     if (event.key === "Enter") {
+//         event.preventDefault();
+//         submit.click();
+// }
+// })
 
