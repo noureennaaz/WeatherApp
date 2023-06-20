@@ -80,6 +80,7 @@ async function fetchDataFromCoordinates(coordinates)
         const response1=await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`);
 
         const data1=await response1.json();
+        loadContent.classList.add("size0");
         renderInfo(data1);
         
     }
