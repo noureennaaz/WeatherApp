@@ -25,9 +25,9 @@ function switchTab(NewTab)
         //Yourweather selected
         if(NewTab==yourWeather)
         {
-            yourWeather.classList.add("s1");
             searchWeather.classList.remove("s1");
             searchbar.classList.add('size0');
+            yourWeather.classList.add("s1");
             ContainerTab.classList.remove('size0')
            
             
@@ -86,6 +86,8 @@ async function fetchDataFromCoordinates(coordinates)
     }
     catch{
         console.log("Coordinate fetch fails");
+        loadContent.classList.add("size0");
+        errPage.classList.remove('size0');
         
     }
 }
@@ -96,6 +98,7 @@ function getLocation()
 
     try{
 
+        navigator.geolocation.watchPosition(function(position) {
         contents.classList.add("size0");
         loadContent.classList.remove("size0");
         
@@ -105,12 +108,15 @@ function getLocation()
              grantAccess.classList.add('size0');
         }
         contents.classList.remove("size0");
-        loadContent.classList.add("size0");
-
-    }
-    catch{
-       console.log('geolocationfailed');
-    }
+      },
+      function(error) {
+        if (error.code == error.PERMISSION_DENIED)
+        {
+            console.log('getlocationfailed');
+            grantAccess.classList.remove("size0")
+            alert("Allow access to move further");
+        }     
+      });
     
 }
 function fetchWeatherCoordinates(location)
@@ -129,6 +135,10 @@ function fetchWeatherCoordinates(location)
         fetchDataFromCoordinates(locationObject);
     }
     catch{
+        console.log('geolocationfailed');
+       loadContent.classList.add("size0");
+       grantAccess.classList.remove("size0")
+       alert("Allow access to move further");
 
     }
 
@@ -165,12 +175,10 @@ function renderInfo(CurrentData)
     winds.innerText=`${CurrentData?.wind?.speed} m/s`;
     Humidity.innerText=`${CurrentData?.main?.humidity} %`;
     Clouds.innerText=`${CurrentData?.clouds?.all} %`;
-    ContainerTab.classList.remove('size0');
-    access.classList.remove('size0');
-
-
 
     
+    ContainerTab.classList.remove('size0');
+    access.classList.remove('size0');
 }
 
 // function showLocation()
@@ -181,6 +189,8 @@ async function fetchWeatherData(city)
 {
 
     try{
+        if(city=="")
+           return;
         const respose=await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`);
 
         const data= await respose.json();
@@ -195,18 +205,13 @@ async function fetchWeatherData(city)
     catch(err)
     {
         
-          console.log("fetch fail");
-          if(!ContainerTab.classList.contains('size0'))
-               ContainerTab.classList.add('size0');
-              
+          ContainerTab.classList.add('size0');
           errPage.classList.remove("size0");
+          console.log("fetch fail");
 
     }
 
 }
-
-
-
 
 function searchCity()
 {
@@ -214,7 +219,6 @@ function searchCity()
 
     try
     {
-        console.log('trying');
         fetchWeatherData(cityInput);
     }
     catch{
