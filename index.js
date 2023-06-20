@@ -49,7 +49,6 @@ function switchTab(NewTab)
 function FromSessionStorage()
 {
 
-    
     const localCoordinates=sessionStorage.getItem("user-coordinates");
 
     // check if already present//
@@ -96,7 +95,6 @@ async function fetchDataFromCoordinates(coordinates)
 function getLocation()
 {
 
-    try{
 
         navigator.geolocation.watchPosition(function(position) {
         contents.classList.add("size0");
@@ -117,7 +115,6 @@ function getLocation()
             alert("Allow access to move further");
         }     
       });
-    
 }
 function fetchWeatherCoordinates(location)
 {
@@ -138,7 +135,7 @@ function fetchWeatherCoordinates(location)
         console.log('geolocationfailed');
        loadContent.classList.add("size0");
        grantAccess.classList.remove("size0")
-       alert("Allow access to move further");
+       alert("Allow access to move further2");
 
     }
 
