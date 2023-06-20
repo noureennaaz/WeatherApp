@@ -1,4 +1,5 @@
-const API_KEY="473f54186294f1278a516ff968aaa1f3";
+
+const API_KEY=config.api_key;
 const inputElement=document.querySelector('[InputText]');
 const grantAccess=document.querySelector('.grant-access-page')
 const loadContent=document.querySelector('.loader')
