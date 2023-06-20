@@ -95,8 +95,7 @@ async function fetchDataFromCoordinates(coordinates)
 function getLocation()
 {
 
-
-        navigator.geolocation.watchPosition(function(position) {
+        
         contents.classList.add("size0");
         loadContent.classList.remove("size0");
         
@@ -106,6 +105,8 @@ function getLocation()
              grantAccess.classList.add('size0');
         }
         contents.classList.remove("size0");
+        navigator.geolocation.watchPosition(function(position) {
+        
       },
       function(error) {
         if (error.code == error.PERMISSION_DENIED)
