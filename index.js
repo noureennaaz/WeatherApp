@@ -58,7 +58,9 @@ function FromSessionStorage()
         console.log("already here");
         grantAccess.classList.add("size0");
         access.classList.remove("size0");
+        loadContent.classList.remove("size0")
         fetchDataFromCoordinates(JSON.parse(localCoordinates));
+        loadContent.classList.add("size0");
     }
     else{
         grantAccess.classList.remove("size0");
@@ -182,9 +184,9 @@ async function fetchWeatherData(city)
 
         const data= await respose.json();
         
-        if(data?.cod==404)
+        if(data?.cod==='404')
         {
-            throw err;
+            throw "error";
         }
         renderInfo(data);
 
