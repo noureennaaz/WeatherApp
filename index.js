@@ -19,7 +19,7 @@ FromSessionStorage();
 
 function switchTab(NewTab)
 {
-    console.log(NewTab);
+    
     if(NewTab!=CurrentTab)
     {
         //Yourweather selected
@@ -29,7 +29,7 @@ function switchTab(NewTab)
             searchWeather.classList.remove("s1");
             searchbar.classList.add('size0');
             ContainerTab.classList.remove('size0')
-            console.log("added class");
+           
             
             fetchDataFromCoordinates(JSON.parse(sessionStorage.getItem("user-coordinates")));
             
@@ -56,7 +56,6 @@ function FromSessionStorage()
     if(localCoordinates)
     {
 
-        console.log("already here");
         grantAccess.classList.add("size0");
         access.classList.remove("size0");
         loadContent.classList.remove("size0")
@@ -76,13 +75,13 @@ async function fetchDataFromCoordinates(coordinates)
 {
     lat=coordinates.lat;
     lon=coordinates.lon;
-    console.log(lat);
+    
     try{
         const response1=await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`);
 
         const data1=await response1.json();
         renderInfo(data1);
-        console.log("coordinates");
+        
     }
     catch{
         console.log("Coordinate fetch fails");
@@ -123,7 +122,7 @@ function fetchWeatherCoordinates(location)
         console.log('this is to inform coordinates are being stored on the session');
         sessionStorage.setItem("user-coordinates", JSON.stringify(locationObject));
         console.log("successfull");
-        console.log(sessionStorage.getItem("user-coordinates"));
+        // console.log(sessionStorage.getItem("user-coordinates"));
     
     
         fetchDataFromCoordinates(locationObject);
