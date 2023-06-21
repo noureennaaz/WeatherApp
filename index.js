@@ -94,8 +94,7 @@ async function fetchDataFromCoordinates(coordinates)
 
 function getLocation()
 {
-
-        
+     
         contents.classList.add("size0");
         loadContent.classList.remove("size0");
         
@@ -103,19 +102,18 @@ function getLocation()
         {
              navigator.geolocation.getCurrentPosition(fetchWeatherCoordinates);
              grantAccess.classList.add('size0');
+             contents.classList.remove("size0");
         }
-        contents.classList.remove("size0");
-        navigator.geolocation.watchPosition(function(position) {
         
-      },
-      function(error) {
-        if (error.code == error.PERMISSION_DENIED)
+    
+    //   function(error) {
+        else //(error.code == error.PERMISSION_DENIED)
         {
             console.log('getlocationfailed');
             grantAccess.classList.remove("size0")
             alert("Allow access to move further");
         }     
-      });
+      
 }
 function fetchWeatherCoordinates(location)
 {
